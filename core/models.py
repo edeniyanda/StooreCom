@@ -15,7 +15,7 @@ class Product(models.Model):
     price = models.FloatField()
     image = models.ImageField(upload_to='product_images/', blank=True, help_text="Add a visual")
     dgital = models.BooleanField(default=False, null=True, blank=True)
-
+ 
     def __str__(self) -> str:
         return self.name
 
@@ -24,6 +24,9 @@ class Order(models.Model):
     date_ordered = models.DateTimeField(auto_now_add=True)
     complete = models.BooleanField(default=True)
     trandaction_id = models.CharField(max_length=100, null=True)
+
+    
+
 
     def __str__(self) -> str:
         return str(self.id)
@@ -34,6 +37,10 @@ class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.SET_NULL, blank=True, null=True)
     quantity = models.IntegerField(default=0, null=True, blank=True)
     date_added = models.DateTimeField(auto_now_add=True)
+
+    @property
+    def total_number(self):
+        return self.product.price * self.quantity
 
 
 class ShippingAddress(models.Model):

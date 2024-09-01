@@ -25,7 +25,17 @@ class Order(models.Model):
     complete = models.BooleanField(default=True)
     trandaction_id = models.CharField(max_length=100, null=True)
 
+    @property
+    def total_price(self):
+        items = self.orderitem_set.all()
+        total = sum([item.total_number for item in items])
+        return total
     
+    @property
+    def total_items(self):
+        items = self.orderitem_set.all()
+        total = sum([item.quantity for item in items])
+        return total
 
 
     def __str__(self) -> str:

@@ -15,14 +15,33 @@ def cart(request):
 
     else:
         items = []
+        order = {
+            "total_items" : 0,
+            "total_price" : 0
+        }
 
     context = {
         "items": items, 
         "order" : order
     }
-    
+
     return render(request, "core/cart.html", context)
 
 def check_out(request):
-    return render(request, "core/check_out.html", {})
+    if request.user.is_authenticated:
+        customer = request.user.customer
+        order, created = Order.objects.get_or_create(customer=customer, complete=False)
+        items = order.orderitem_set.all()
+    else:
+        items = []
+        order = {
+            "total_items" : 0,
+            "total_price" : 0
+        }
+
+    context = {
+        "items": items, 
+        "order" : order
+    }
+    return render(request, "core/check_out.html", context)
 

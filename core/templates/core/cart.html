@@ -12,7 +12,7 @@
 				<table class="table">
 					<tr>
 						<th><h5>Items: <strong>{{order.total_items}}</strong></h5></th>
-						<th><h5>Total:<strong> {{order.total_price}}</strong></h5></th>
+						<th><h5>Total:<strong>${{order.total_price|floatformat:2}}</strong></h5></th>
 						<th>
 							<a  style="float:right; margin:5px;" class="btn btn-success" href="{% url 'check_out_page'%}">Checkout</a>
 						</th>
